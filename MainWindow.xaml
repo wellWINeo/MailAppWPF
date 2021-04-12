@@ -1,0 +1,49 @@
+﻿<Window x:Class="MailApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MailApp"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="400" Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="15*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <ToolBar Height="25" VerticalAlignment="Top" Grid.Row="0">
+
+                <Menu>
+                    <!-- File -->
+                    <MenuItem Header="File">
+                        <MenuItem Header="New mail" />
+                        <MenuItem Header="Quit" />
+                    </MenuItem>
+
+                    <!-- Edit -->
+                    <MenuItem Header="Edit">
+                        <MenuItem Header="Delete" />
+                        <MenuItem Header="Archive" />
+                        <MenuItem Header="Drafts" />
+                    </MenuItem>
+
+                    <!-- New mail -->
+                    <MenuItem Header="New mail" Click="NewMailClick"/>
+                </Menu>
+            </ToolBar>
+        </StackPanel>
+        <ListBox x:Name="IncomingMails" Grid.Row="1" ItemsSource="{Binding test_arr}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock Text="{Binding From}" Foreground="Black"/>
+                        <TextBlock Text="{Binding To}" Foreground="Black"/>
+                        <TextBlock Text="{Binding Subject}" Foreground="Black"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>
