@@ -1,0 +1,22 @@
+﻿<Window x:Class="MailApp.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MailApp"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="220" Width="200">
+    <Grid>
+        <StackPanel>
+            <TextBlock Margin="0, 25, 0, 0" Text="Login:" />
+            <!--
+            DELETE CREDENTIALS
+            -->
+            <TextBox x:Name="LoginBox" Text="uspenskiy-03@mail.ru" />
+            <TextBlock Margin="0, 25, 0, 0" Text="Password:" />
+            <PasswordBox x:Name="PasswdBox" Password="15May2003" />
+            <CheckBox x:Name="SaveLogin" Content="Remember me" />
+            <Button Content="Login" HorizontalAlignment="Center" Click="LoginClick"/>
+        </StackPanel>
+    </Grid>
+</Window>
