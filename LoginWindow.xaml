@@ -12,9 +12,9 @@
             <!--
             DELETE CREDENTIALS
             -->
-            <TextBox x:Name="LoginBox" Text="uspenskiy-03@mail.ru" />
+            <TextBox x:Name="LoginBox" Text="" />
             <TextBlock Margin="0, 25, 0, 0" Text="Password:" />
-            <PasswordBox x:Name="PasswdBox" Password="15May2003" />
+            <PasswordBox x:Name="PasswdBox" Password="" />
             <CheckBox x:Name="SaveLogin" Content="Remember me" />
             <Button Content="Login" HorizontalAlignment="Center" Click="LoginClick"/>
         </StackPanel>

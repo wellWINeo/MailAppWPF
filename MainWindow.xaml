@@ -26,7 +26,7 @@
                     <MenuItem Header="Edit">
                         <MenuItem Header="Delete" />
                         <MenuItem Header="Archive" />
-                        <MenuItem Header="Drafts" />
+                        <MenuItem Header="Drafts" Click="ViewDraftsClick"/>
                     </MenuItem>
 
                     <!-- New mail -->

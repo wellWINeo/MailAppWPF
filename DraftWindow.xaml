@@ -5,8 +5,37 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailApp"
         mc:Ignorable="d"
-        Title="DraftWindow" Height="450" Width="800">
+        Title="MainWindow" Height="400" Width="400">
+    
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition />
+            <RowDefinition Height="15*" />
+        </Grid.RowDefinitions>
+
+        <StackPanel>
+            <ToolBar Height="25" VerticalAlignment="Top" Grid.Row="0">
+
+                <Menu>
+                    <!-- Delete draft -->
+                    <MenuItem Header="Delete" Click="DeleteDraftClick" />
+
+                    <!-- Send draft -->
+                    <MenuItem Header="Send Draft" Click="SendDraftClick"/>
+                </Menu>
+            </ToolBar>
+        </StackPanel>
+        <ListBox x:Name="DraftMails" Grid.Row="1" ItemsSource="{Binding DraftsArr}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Vertical" >
+                        <TextBlock Text="{Binding From}" Foreground="Black"/>
+                        <TextBlock Text="{Binding To}" Foreground="Black"/>
+                        <TextBlock Text="{Binding Subject}" Foreground="Black"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </Window>
+

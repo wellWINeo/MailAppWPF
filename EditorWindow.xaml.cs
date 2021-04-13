@@ -16,9 +16,6 @@ using System.Windows.Forms;
 using System.Net.Mail;
 using System.Net;
 
-using SautinSoft;
-using HtmlAgilityPack;
-
 namespace MailApp
 {
     /// <summary>
@@ -59,34 +56,7 @@ namespace MailApp
 			msg.Subject = SubjectBox.Text;
 			msg.SubjectEncoding = Encoding.UTF8;
 
-			RtfToHtml converter = new RtfToHtml();
-			string msg_path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Message.rtf");
-			string html_path = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Message.html");
-
-			/*
-			MemoryStream rtf_stream = new MemoryStream();
-			*/
-
-			TextRange range = new TextRange(rtbEditor.Document.ContentStart, rtbEditor.Document.ContentEnd);
-
-			using (FileStream msg_stream = new FileStream(msg_path, FileMode.Create))
-            {
-				range.Save(msg_stream, System.Windows.DataFormats.Rtf);
-			}
-
-			converter.OutputFormat = RtfToHtml.eOutputFormat.HTML_5;
-			converter.OpenRtf(msg_path);
-			
-			MemoryStream html_stream = new MemoryStream();
-			converter.ToHtml(html_path);
-
-			HtmlAgilityPack.HtmlDocument doc = new HtmlAgilityPack.HtmlDocument();
-			doc.Load(html_path);
-
-			//rtf_stream.Dispose();
-			html_stream.Dispose();
-			System.Windows.Forms.MessageBox.Show(doc.DocumentNode.OuterHtml);
-			msg.Body = doc.DocumentNode.OuterHtml;
+			msg.Body = rtbEditor.Document.ToString();
 			msg.BodyEncoding = Encoding.UTF8;
 			msg.IsBodyHtml = true;
 
@@ -95,7 +65,7 @@ namespace MailApp
             {
 				client = new SmtpClient("mysmtpclient");
 				client.DeliveryMethod = SmtpDeliveryMethod.SpecifiedPickupDirectory;
-				string pick_dir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "ToSend");
+				string pick_dir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Drafts");
 				if (!Directory.Exists(pick_dir)) { Directory.CreateDirectory(pick_dir); }
 				client.PickupDirectoryLocation = pick_dir;
 				System.Windows.MessageBox.Show(pick_dir);
