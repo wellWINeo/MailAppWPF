@@ -48,7 +48,7 @@ namespace MailApp
 			cmbFontSize.Text = temp.ToString();
 		}
 
-		private void MailSend(bool IsDraft)
+		public void MailSend(bool IsDraft)
         {
 			var from = new MailAddress(this.Login);
 			var to = new MailAddress(ToBox.Text);
@@ -109,11 +109,6 @@ namespace MailApp
 			}
 		}
 
-		/*private void cmbFontFamily_SelectionChanged(object sender, SelectionChangedEventArgs e)
-		{
-			if (cmbFontFamily.SelectedItem != null)
-				rtbEditor.Selection.ApplyPropertyValue(Inline.FontFamilyProperty, cmbFontFamily.SelectedItem);
-		}*/
 
 		private void cmbFontSize_TextChanged(object sender, TextChangedEventArgs e)
 		{

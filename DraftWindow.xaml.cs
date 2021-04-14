@@ -17,6 +17,7 @@ using System.Collections.ObjectModel;
 using System.Net.Mail;
 
 using MsgReader;
+using System.Net;
 
 namespace MailApp
 {
@@ -28,16 +29,19 @@ namespace MailApp
         public string DraftsPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Drafts");
         public List<MailMessage> DraftsArr = new List<MailMessage>();
         public Dictionary<int, string> MailPathDict = new Dictionary<int, string>();
+        private string login, passwd;
         
-        public DraftWindow()
+        public DraftWindow(string login, string passwd)
         {
             InitializeComponent();
+            this.login = login;
+            this.passwd = passwd;
             new Thread(LoadDrafts).Start();
             this.DraftMails.ItemsSource = DraftsArr;
         }
 
         /// <summary>
-        /// Method delete Draft
+        /// Method to delete Draft
         /// </summary>
         private void DeleteDraftClick(object sender, RoutedEventArgs e)
         {
@@ -45,7 +49,9 @@ namespace MailApp
             {
                 foreach (MailMessage select in DraftMails.SelectedItems)
                 {
-                    File.Delete(this.MailPathDict[select.GetHashCode()]);
+                    MessageBox.Show(MailPathDict[select.GetHashCode()]);
+                    File.Delete(System.IO.Path.Combine(DraftsPath,
+                        this.MailPathDict[select.GetHashCode()]));
                     MailPathDict.Remove(select.GetHashCode());
                     DraftsArr.Remove(select);
                 }
@@ -56,6 +62,19 @@ namespace MailApp
 
         private void SendDraftClick(object sender, RoutedEventArgs e)
         {
+            if (DraftMails.SelectedItems.Count != 0)
+            {
+                string mail_host = "smtp." + this.login.Split('@')[1];
+                SmtpClient client = new SmtpClient(mail_host, 587);
+                client.EnableSsl = true;
+                client.UseDefaultCredentials = false;
+                client.Credentials = new NetworkCredential(this.login, this.passwd);
+
+                foreach (MailMessage mail in DraftMails.SelectedItems)
+                {
+                    client.Send(mail);
+                }
+            }
 
         }
 

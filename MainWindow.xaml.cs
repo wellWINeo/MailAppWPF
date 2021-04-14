@@ -91,7 +91,7 @@ namespace MailApp
 
         private void ViewDraftsClick(object sender, RoutedEventArgs e)
         {
-            DraftWindow DraftWin = new DraftWindow();
+            DraftWindow DraftWin = new DraftWindow(this.login, this.passwd);
             DraftWin.ShowDialog();
         }
 
