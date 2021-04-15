@@ -84,6 +84,11 @@ namespace MailApp
         public void LoadDrafts()
         {
             DirectoryInfo dir = new DirectoryInfo(this.DraftsPath);
+            if (!Directory.Exists(this.DraftsPath))
+            {
+                Directory.CreateDirectory(this.DraftsPath);
+                return;
+            }
             FileInfo[] files = dir.GetFiles("*.eml");
             foreach(var file in files)
             {

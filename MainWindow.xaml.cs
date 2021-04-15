@@ -95,5 +95,13 @@ namespace MailApp
             DraftWin.ShowDialog();
         }
 
+        private void IncomingMailDoubleClick(object sender, RoutedEventArgs e)
+        {
+            if (IncomingMails.SelectedItem != null)
+            {
+                MailViewer view = new MailViewer(IncomingMails.SelectedItem as MailMessage);
+                view.ShowDialog();
+            }
+        }
     }
 }

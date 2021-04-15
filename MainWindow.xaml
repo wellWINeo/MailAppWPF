@@ -34,7 +34,7 @@
                 </Menu>
             </ToolBar>
         </StackPanel>
-        <ListBox x:Name="IncomingMails" Grid.Row="1" ItemsSource="{Binding test_arr}">
+        <ListBox x:Name="IncomingMails" Grid.Row="1" ItemsSource="{Binding test_arr}" MouseDoubleClick="IncomingMailDoubleClick">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" >

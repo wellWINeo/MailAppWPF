@@ -58,7 +58,6 @@ namespace MailApp
 			msg.Subject = SubjectBox.Text;
 			msg.SubjectEncoding = Encoding.UTF8;
 
-			msg.Body = rtbEditor.Document.ToString();
 			msg.BodyEncoding = Encoding.UTF8;
 			msg.IsBodyHtml = true;
 
@@ -81,21 +80,28 @@ namespace MailApp
 				client.Credentials = new NetworkCredential(this.Login, this.Passwd);
             }
 
-			TextRange range = new TextRange(rtbEditor.Document.ContentStart,
+			string rtf = string.Empty;
+
+			using (MemoryStream stream = new MemoryStream())
+			{
+				TextRange range = new TextRange(rtbEditor.Document.ContentStart,
 											rtbEditor.Document.ContentEnd);
-			MemoryStream stream = new MemoryStream();
-			//range.Save(stream, System.Windows.DataFormats.Rtf);
-			range.Save(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Mail.rtf"), System.Windows.DataFormats.Rtf);
+				range.Save(stream, System.Windows.DataFormats.Rtf);
+				stream.Seek(0, SeekOrigin.Begin);
 
-			string rtf;
 
-			using (StreamReader reader = new StreamReader(stream))
-            {
-				rtf = reader.ReadToEnd();
-            }
-			//RtfSource source = new RtfSource(new StreamReader(stream));
+				using (StreamReader reader = new StreamReader(stream))
+				{
+					rtf = reader.ReadToEnd();
+				}
+			}
+
+            //RtfSource source = new RtfSource(new StreamReader(stream));
+            System.Windows.MessageBox.Show(rtf);
 			string html = Rtf.ToHtml(rtf);
 			System.Windows.MessageBox.Show(html);
+
+			msg.Body = html;
 
 			client.Send(msg);
 		}
