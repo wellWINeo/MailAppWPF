@@ -7,7 +7,45 @@
         mc:Ignorable="d"
         Title="MailViewer" Height="450" Width="800">
     <Grid>
-        <WebBrowser x:Name="BrowserView"/>
+        <!-- Grid definition -->
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.08*"/>
+            <RowDefinition Height="0.08*"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+
+        <!-- From mail's field-->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="0">
+            <Label Content="From: " />
+                <Label x:Name="FromLabel"/>
+            </StackPanel>
+
+        <!-- Date field -->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
+            <Label Content="Date: " />
+            <Label x:Name="DateLabel" />
+        </StackPanel>
+        
+        <!-- To mail's field-->
+        <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
+                <Label Content="To: " />
+                <Label x:Name="ToLabel" />
+            </StackPanel>
+        
+        <!-- Subject field s-->
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
+            <Label Content="Subject: " />
+            <Label Name="SubjectLabel" />
+        </StackPanel>
+
+        <!-- web view -->
+        <WebBrowser Grid.Row="3" x:Name="BrowserView" Grid.ColumnSpan="3"/>
 
     </Grid>
 </Window>

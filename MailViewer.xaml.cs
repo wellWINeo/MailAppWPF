@@ -14,6 +14,13 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
+// cryptography
+using System.Security;
+using System.Security.Cryptography;
+using System.Runtime.InteropServices;
+using System.Text.RegularExpressions;
+
 namespace MailApp
 {
     /// <summary>
@@ -28,7 +35,17 @@ namespace MailApp
             this.mail = mail;
             InitializeComponent();
             html_stream = new MemoryStream(Encoding.UTF8.GetBytes(this.mail.Body));
+            
+            // fill info about mail
+            FromLabel.Content = this.mail.From;
+            ToLabel.Content = this.mail.To;
+            SubjectLabel.Content = this.mail.Subject;
+
+            // open body in browser
+           
             BrowserView.NavigateToStream(html_stream);
+
+           
         }
     }
 }

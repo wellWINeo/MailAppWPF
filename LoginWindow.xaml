@@ -8,7 +8,7 @@
         Title="LoginWindow" Height="220" Width="200">
     <Grid>
         <StackPanel>
-            <TextBlock Margin="0, 25, 0, 0" Text="Login:" />
+            <TextBlock Margin="0, 25, 0, 0" Text="Login:" x:Name="LoginLabel"/>
             <!--
             DELETE CREDENTIALS
             -->
