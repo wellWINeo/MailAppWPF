@@ -248,7 +248,6 @@ namespace MailApp
         private void rtbEditor_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
         {
 			e.Handled = true;
-			rtbEditor_blur.Radius = rtbEditor_blur.Radius == 0 ? 25 : 0;
 		}
     }
 }
