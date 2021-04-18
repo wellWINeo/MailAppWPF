@@ -37,6 +37,7 @@ namespace MailApp
 			this.Passwd = passwd;
             InitializeComponent();
 			FetchKnownUsers();
+			ToCombBox.ItemsSource = KnownUsers;
 			FromBox.Text = this.Login;
         }
 
@@ -77,7 +78,6 @@ namespace MailApp
 				string pick_dir = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Drafts");
 				if (!Directory.Exists(pick_dir)) { Directory.CreateDirectory(pick_dir); }
 				client.PickupDirectoryLocation = pick_dir;
-				System.Windows.MessageBox.Show(pick_dir);
 			} 
 			else
             {
@@ -105,9 +105,7 @@ namespace MailApp
 			}
 
             //RtfSource source = new RtfSource(new StreamReader(stream));
-            System.Windows.MessageBox.Show(rtf);
 			string html = Rtf.ToHtml(rtf);
-			System.Windows.MessageBox.Show(html);
 
 			msg.Body = html;
 
@@ -127,11 +125,14 @@ namespace MailApp
 		
 		public async void UpdateKnownUsers()
         {
-			bool isNew = false;
+			bool isNew = true;
 			foreach(string item in KnownUsers)
             {
 				if (item == ToCombBox.Text)
-					isNew = true;
+                {
+					isNew = false;
+					break;
+                }
             }
 			if (isNew)
 			{
