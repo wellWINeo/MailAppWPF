@@ -235,5 +235,20 @@ namespace MailApp
 			rtbEditor.Document.LineHeight = Convert.ToDouble((sender as System.Windows.Controls.MenuItem).Header);
 		}
 
-	}
+        private void rtbEditor_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+
+        }
+
+		private void rtbEditor_react(object sender, System.Windows.DragEventArgs e)
+		{
+			rtbEditor_blur.Radius = rtbEditor_blur.Radius == 0 ? 25 : 0;
+		}
+
+        private void rtbEditor_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
+        {
+			e.Handled = true;
+			rtbEditor_blur.Radius = rtbEditor_blur.Radius == 0 ? 25 : 0;
+		}
+    }
 }

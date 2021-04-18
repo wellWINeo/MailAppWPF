@@ -75,20 +75,31 @@
             -->
             <ComboBox Name="cmbFontSize" Width="50" IsEditable="True" TextBoxBase.TextChanged="cmbFontSize_TextChanged" />
         </ToolBar>
-        <StackPanel Orientation="Vertical" Width="75">
-            <Label Content="From: " />
-            <TextBox x:Name="FromBox" IsEnabled="False"/>
+        <StackPanel Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label Content="From: " />
+                <TextBox x:Name="FromBox" IsEnabled="False" MinWidth="80px"/>
 
-            <Label />
-            <Label Content="To: " />
-            <!--<TextBox x:Name="ToBox" />-->
-            <ComboBox x:Name="ToCombBox" IsEditable="True" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False"
-            ItemsSource="{Binding KnowUsers}" />
+                <Separator />
+                <Separator />
+                <Separator />
 
-            <Label />
-            <Label Content="Subject: " />
-            <TextBox x:Name="SubjectBox" />
+
+                <Label Content="To: " />
+                <ComboBox x:Name="ToCombBox" IsEditable="True" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False"
+                ItemsSource="{Binding KnowUsers}" MinWidth="80px"/>
+
+                <Label />
+                <Label Content="Subject: " />
+                <TextBox x:Name="SubjectBox" MinWidth="80px"/>
+            </StackPanel>
+            <RichTextBox Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" Height="350"
+            DragDrop.Drop="rtbEditor_Drop" AllowDrop="True" Drop="rtbEditor_Drop"
+            DragEnter="rtbEditor_react" DragLeave="rtbEditor_react" PreviewDragOver="rtbEditor_PreviewDragOver">
+                <RichTextBox.Effect>
+                    <BlurEffect x:Name="rtbEditor_blur" Radius="0" />
+                </RichTextBox.Effect>
+            </RichTextBox>
         </StackPanel>
-        <RichTextBox Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" />
     </DockPanel>
 </Window>
