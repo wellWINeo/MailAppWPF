@@ -17,6 +17,7 @@ using System.Net.Mail;
 using System.Net;
 
 using RtfPipe;
+using System.Collections.ObjectModel;
 
 namespace MailApp
 {
@@ -27,11 +28,15 @@ namespace MailApp
     {
 		public string Login;
 		private string Passwd;
-        public EditorWindow(string login, string passwd)
+		public ObservableCollection<String> KnownUsers = new ObservableCollection<String>();
+		string pathToUsers = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Known.users");
+
+		public EditorWindow(string login, string passwd)
         {
 			this.Login = login;
 			this.Passwd = passwd;
             InitializeComponent();
+			FetchKnownUsers();
 			FromBox.Text = this.Login;
         }
 
@@ -52,8 +57,11 @@ namespace MailApp
 
 		public void MailSend(bool IsDraft)
         {
+			// Update known users
+			UpdateKnownUsers();
+
 			var from = new MailAddress(this.Login);
-			var to = new MailAddress(ToBox.Text);
+			var to = new MailAddress(ToCombBox.Text);
 			MailMessage msg = new MailMessage(from, to);
 			msg.Subject = SubjectBox.Text;
 			msg.SubjectEncoding = Encoding.UTF8;
@@ -103,8 +111,55 @@ namespace MailApp
 
 			msg.Body = html;
 
-			client.Send(msg);
+			try
+			{
+				client.Send(msg);
+			} 
+			catch (SmtpException e)
+            {
+				System.Windows.Forms.MessageBox.Show("Error in mail sending!");
+            }
+			catch (Exception e)
+            {
+				System.Windows.Forms.MessageBox.Show("Unknown error!\n" + e.Message);
+            }
 		}
+		
+		public async void UpdateKnownUsers()
+        {
+			bool isNew = false;
+			foreach(string item in KnownUsers)
+            {
+				if (item == ToCombBox.Text)
+					isNew = true;
+            }
+			if (isNew)
+			{
+				using (FileStream fs = new FileStream(pathToUsers, FileMode.OpenOrCreate))
+				{
+					using (StreamWriter writer = new StreamWriter(fs))
+					{
+						await writer.WriteLineAsync(ToCombBox.Text);
+					}
+				}
+
+				KnownUsers.Add(ToCombBox.Text);
+			}
+        }
+
+		public async void FetchKnownUsers()
+        {
+			
+
+			using (FileStream fs = new FileStream(pathToUsers, FileMode.OpenOrCreate))
+            {
+				using (StreamReader reader = new StreamReader(fs))
+                {
+					while (!reader.EndOfStream)
+						this.KnownUsers.Add(await reader.ReadLineAsync());
+                }
+            }
+        }
 
 		private void SendMailClick(object sender, RoutedEventArgs e) { this.MailSend(false); }
 		private void SaveAsDraftClick(object sender, RoutedEventArgs e) { this.MailSend(true); }

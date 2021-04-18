@@ -81,7 +81,9 @@
 
             <Label />
             <Label Content="To: " />
-            <TextBox x:Name="ToBox" />
+            <!--<TextBox x:Name="ToBox" />-->
+            <ComboBox x:Name="ToCombBox" IsEditable="True" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False"
+            ItemsSource="{Binding KnowUsers}" />
 
             <Label />
             <Label Content="Subject: " />
