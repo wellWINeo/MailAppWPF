@@ -14,12 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
-
-// cryptography
-using System.Security;
-using System.Security.Cryptography;
-using System.Runtime.InteropServices;
-using System.Text.RegularExpressions;
+using System.Diagnostics;
 
 namespace MailApp
 {
@@ -28,12 +23,15 @@ namespace MailApp
     /// </summary>
     public partial class MailViewer : Window
     {
-        public MailMessage mail;
+        public MailMessage mail { get; set; }
         public MemoryStream html_stream;
         public MailViewer(MailMessage mail)
         {
             this.mail = mail;
             InitializeComponent();
+
+            AttachCount.Content = this.mail.Attachments.Count();
+
             html_stream = new MemoryStream(Encoding.UTF8.GetBytes(this.mail.Body));
             
             // fill info about mail
@@ -42,10 +40,29 @@ namespace MailApp
             SubjectLabel.Content = this.mail.Subject;
 
             // open body in browser
-           
-            BrowserView.NavigateToStream(html_stream);
+            BrowserView.NavigateToStream(html_stream);           
+        }
 
-           
+        private async void ViewButtonClick(object sender, RoutedEventArgs e)
+        {
+            string downloadPath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Downloads");
+            if (!Directory.Exists(downloadPath))
+                Directory.CreateDirectory(downloadPath);
+
+            foreach (Attachment attach in mail.Attachments)
+            {
+                string filePath = System.IO.Path.Combine(downloadPath, attach.Name);
+                try
+                {
+                    using (FileStream fs = new FileStream(filePath, FileMode.CreateNew))
+                    {
+                        attach.ContentStream.Position = 0;
+                        await attach.ContentStream.CopyToAsync(fs);
+                    }
+                } catch (IOException) { }
+            }
+
+            Process.Start(downloadPath);
         }
     }
 }

@@ -242,9 +242,7 @@ namespace MailApp
 					System.Windows.MessageBox.Show("Invalid color");
 				}
 				text.ApplyPropertyValue(TextElement.ForegroundProperty, brush);
-
 			}
-			// rtbEditor.IsInactiveSelectionHighlightEnabled = true;
 		}
 
 		private void LineSpacing(object sender, RoutedEventArgs e)

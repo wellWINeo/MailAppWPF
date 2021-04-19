@@ -12,6 +12,7 @@
             <ColumnDefinition />
             <ColumnDefinition />
             <ColumnDefinition />
+            <ColumnDefinition Width="0.3*"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -26,12 +27,14 @@
                 <Label x:Name="FromLabel"/>
             </StackPanel>
 
-        <!-- Date field -->
+        <!-- Attachments field -->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="2">
-            <Label Content="Date: " />
-            <Label x:Name="DateLabel" />
+            <Label Content="Atachments count: " />
+            <Label x:Name="AttachCount" />
         </StackPanel>
-        
+
+        <Button Content="View" Click="ViewButtonClick" MinWidth="50" Grid.Row="0" Grid.Column="3"/>
+
         <!-- To mail's field-->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                 <Label Content="To: " />
@@ -39,13 +42,13 @@
             </StackPanel>
         
         <!-- Subject field s-->
-        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="3">
+        <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="4">
             <Label Content="Subject: " />
             <Label Name="SubjectLabel" />
         </StackPanel>
 
         <!-- web view -->
-        <WebBrowser Grid.Row="3" x:Name="BrowserView" Grid.ColumnSpan="3"/>
+        <WebBrowser Grid.Row="3" x:Name="BrowserView" Grid.ColumnSpan="4"/>
 
     </Grid>
 </Window>
