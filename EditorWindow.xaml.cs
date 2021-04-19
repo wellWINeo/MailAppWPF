@@ -21,21 +21,25 @@ using System.Collections.ObjectModel;
 
 namespace MailApp
 {
-    /// <summary>
-    /// Логика взаимодействия для EditorWindow.xaml
-    /// </summary>
-    public partial class EditorWindow : Window
-    {
+	/// <summary>
+	/// Логика взаимодействия для EditorWindow.xaml
+	/// </summary>
+	public partial class EditorWindow : Window
+	{
 		public string Login;
 		private string Passwd;
 		public ObservableCollection<String> KnownUsers = new ObservableCollection<String>();
 		string pathToUsers = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Known.users");
+		public Collection<Attachment> AttachArr = new Collection<Attachment>();
+		public int AttachArrCount { get; set; }
+		public MailMessage msg;
 
 		public EditorWindow(string login, string passwd)
         {
 			this.Login = login;
 			this.Passwd = passwd;
             InitializeComponent();
+			AttachCounter.Content = 0;
 			FetchKnownUsers();
 			ToCombBox.ItemsSource = KnownUsers;
 			FromBox.Text = this.Login;
@@ -61,15 +65,25 @@ namespace MailApp
 			// Update known users
 			UpdateKnownUsers();
 
+			// Creating mail
 			var from = new MailAddress(this.Login);
 			var to = new MailAddress(ToCombBox.Text);
-			MailMessage msg = new MailMessage(from, to);
+			msg = new MailMessage(from, to);
+			
+			// Add attachements
+			foreach (var attach in AttachArr)
+            {
+				msg.Attachments.Add(attach);
+            }
+
+			// subject & body
 			msg.Subject = SubjectBox.Text;
 			msg.SubjectEncoding = Encoding.UTF8;
 
 			msg.BodyEncoding = Encoding.UTF8;
 			msg.IsBodyHtml = true;
-
+			
+			// mail sending
 			SmtpClient client;
 			if (IsDraft)
             {
@@ -88,6 +102,7 @@ namespace MailApp
 				client.Credentials = new NetworkCredential(this.Login, this.Passwd);
             }
 
+			// converting rtf -> html
 			string rtf = string.Empty;
 
 			using (MemoryStream stream = new MemoryStream())
@@ -104,9 +119,7 @@ namespace MailApp
 				}
 			}
 
-            //RtfSource source = new RtfSource(new StreamReader(stream));
 			string html = Rtf.ToHtml(rtf);
-
 			msg.Body = html;
 
 			try
@@ -120,6 +133,10 @@ namespace MailApp
 			catch (Exception e)
             {
 				System.Windows.Forms.MessageBox.Show("Unknown error!\n" + e.Message);
+            }
+            finally
+            {
+				msg = null;
             }
 		}
 		
@@ -237,7 +254,17 @@ namespace MailApp
 
         private void rtbEditor_Drop(object sender, System.Windows.DragEventArgs e)
         {
+			if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop))
+            {
+				string[] files = (string[])e.Data.GetData(System.Windows.DataFormats.FileDrop);
 
+				foreach (string file in files)
+				{
+					System.Windows.Forms.MessageBox.Show(file);
+					AttachArr.Add(new Attachment(file));
+					AttachCounter.Content = (int)AttachCounter.Content + 1;
+				}
+            }
         }
 
 		private void rtbEditor_react(object sender, System.Windows.DragEventArgs e)

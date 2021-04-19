@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MailApp"
         mc:Ignorable="d"
         Title="New mail" Height="450" Width="800">
+    
     <Window.CommandBindings>
         <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" />
         <CommandBinding Command="ApplicationCommands.Save" Executed="Save_Executed" />
@@ -80,21 +81,19 @@
                 <Label Content="From: " />
                 <TextBox x:Name="FromBox" IsEnabled="False" MinWidth="80px"/>
 
-                <Separator />
-                <Separator />
-                <Separator />
-
-
                 <Label Content="To: " />
                 <ComboBox x:Name="ToCombBox" IsEditable="True" IsTextSearchEnabled="True" IsTextSearchCaseSensitive="False"
-                ItemsSource="{Binding KnowUsers}" MinWidth="80px"/>
+                ItemsSource="{Binding Source=KnowUsers}" MinWidth="80px"/>
 
                 <Label />
                 <Label Content="Subject: " />
                 <TextBox x:Name="SubjectBox" MinWidth="80px"/>
+
+                <Label Content="Attachements: " />
+                <Label x:Name="AttachCounter" />
             </StackPanel>
             <RichTextBox Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" Height="350"
-            DragDrop.Drop="rtbEditor_Drop" AllowDrop="True" Drop="rtbEditor_Drop"
+             AllowDrop="True" Drop="rtbEditor_Drop"
             DragEnter="rtbEditor_react" DragLeave="rtbEditor_react" PreviewDragOver="rtbEditor_PreviewDragOver">
                 <RichTextBox.Effect>
                     <BlurEffect x:Name="rtbEditor_blur" Radius="0" />
