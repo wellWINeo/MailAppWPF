@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 
 using OpenPop.Pop3;
 using OpenPop.Mime;
+using System.IO;
 
 namespace MailApp
 {
@@ -102,6 +103,17 @@ namespace MailApp
                 MailViewer view = new MailViewer(IncomingMails.SelectedItem as MailMessage);
                 view.ShowDialog();
             }
+        }
+
+        private void QuitClick(object sender, RoutedEventArgs e)
+        {
+            Environment.Exit(0);
+        }
+
+        private void LogoutClick(object sender, RoutedEventArgs e)
+        {
+            File.Delete(System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Login.txt"));
+            Environment.Exit(0);
         }
     }
 }

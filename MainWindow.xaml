@@ -16,20 +16,9 @@
             <ToolBar Height="25" VerticalAlignment="Top" Grid.Row="0">
 
                 <Menu>
-                    <!-- File -->
-                    <MenuItem Header="File">
-                        <MenuItem Header="New mail" />
-                        <MenuItem Header="Quit" />
-                    </MenuItem>
-
-                    <!-- Edit -->
-                    <MenuItem Header="Edit">
-                        <MenuItem Header="Delete" />
-                        <MenuItem Header="Archive" />
-                        <MenuItem Header="Drafts" Click="ViewDraftsClick"/>
-                    </MenuItem>
-
-                    <!-- New mail -->
+                    <MenuItem Header="Quit" Click="QuitClick" />
+                    <MenuItem Header="Logout" Click="LogoutClick" />
+                    <MenuItem Header="Drafts" Click="ViewDraftsClick"/>
                     <MenuItem Header="New mail" Click="NewMailClick"/>
                 </Menu>
             </ToolBar>
