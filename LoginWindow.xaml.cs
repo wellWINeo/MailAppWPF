@@ -24,6 +24,7 @@ namespace MailApp
         public string Login, Passwd;
         public string LoginFilePath = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Login.txt");
         public bool IsLoginFileExist = false;
+        public string SourceUri { get; }
 
         public LoginWindow()
         {

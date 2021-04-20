@@ -28,7 +28,6 @@
                 <DataTemplate>
                     <StackPanel Orientation="Vertical" >
                         <TextBlock Text="{Binding From}" Foreground="Black"/>
-                        <TextBlock Text="{Binding To}" Foreground="Black"/>
                         <TextBlock Text="{Binding Subject}" Foreground="Black"/>
                     </StackPanel>
                 </DataTemplate>

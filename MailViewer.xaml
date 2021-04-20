@@ -38,8 +38,14 @@
         <!-- To mail's field-->
         <StackPanel Orientation="Horizontal" Grid.Row="0" Grid.Column="1">
                 <Label Content="To: " />
-                <Label x:Name="ToLabel" />
-            </StackPanel>
+                <ListBox x:Name="ToListBox">
+                    <ListBox.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel Orientation="Horizontal" />
+                        </ItemsPanelTemplate>
+                    </ListBox.ItemsPanel>
+                </ListBox>
+        </StackPanel>
         
         <!-- Subject field s-->
         <StackPanel Orientation="Horizontal" Grid.Row="1" Grid.ColumnSpan="4">

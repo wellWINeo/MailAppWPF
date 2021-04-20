@@ -8,15 +8,17 @@
         Title="LoginWindow" Height="220" Width="200">
     <Grid>
         <StackPanel>
-            <TextBlock Margin="0, 25, 0, 0" Text="Login:" x:Name="LoginLabel"/>
-            <!--
-            DELETE CREDENTIALS
-            -->
+            <Image x:Name="LogoImage" Source="/logo.ico" Height="50"/>
+
+            <TextBlock Text="Login:" x:Name="LoginLabel"/>
             <TextBox x:Name="LoginBox" Text="" />
+            
             <TextBlock Margin="0, 25, 0, 0" Text="Password:" />
             <PasswordBox x:Name="PasswdBox" Password="" />
+            
             <CheckBox x:Name="SaveLogin" Content="Remember me" />
             <Button Content="Login" HorizontalAlignment="Center" Click="LoginClick"/>
+
         </StackPanel>
     </Grid>
 </Window>

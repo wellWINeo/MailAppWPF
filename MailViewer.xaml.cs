@@ -36,7 +36,7 @@ namespace MailApp
             
             // fill info about mail
             FromLabel.Content = this.mail.From;
-            ToLabel.Content = this.mail.To;
+            ToListBox.ItemsSource = this.mail.To;
             SubjectLabel.Content = this.mail.Subject;
 
             // open body in browser
