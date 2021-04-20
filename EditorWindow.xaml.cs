@@ -28,6 +28,7 @@ namespace MailApp
 	{
 		public string Login;
 		private string Passwd;
+		public int[] fontSizeArr = new int[] { 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 		public ObservableCollection<String> KnownUsers = new ObservableCollection<String>();
 		string pathToUsers = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Known.users");
 		public Collection<Attachment> AttachArr = new Collection<Attachment>();
@@ -43,6 +44,8 @@ namespace MailApp
 			FetchKnownUsers();
 			ToCombBox.ItemsSource = KnownUsers;
 			FromBox.Text = this.Login;
+			cmbFontSize.ItemsSource = fontSizeArr;
+
         }
 
 		private void rtbEditor_SelectionChanged(object sender, RoutedEventArgs e)

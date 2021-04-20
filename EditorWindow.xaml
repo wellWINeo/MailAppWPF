@@ -7,10 +7,6 @@
         mc:Ignorable="d"
         Title="New mail" Height="450" Width="800">
     
-    <Window.CommandBindings>
-        <CommandBinding Command="ApplicationCommands.Open" Executed="Open_Executed" />
-        <CommandBinding Command="ApplicationCommands.Save" Executed="Save_Executed" />
-    </Window.CommandBindings>
     <DockPanel>
         <ToolBar DockPanel.Dock="Top">
             <Menu>
