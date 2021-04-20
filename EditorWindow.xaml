@@ -3,6 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:xctk="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:local="clr-namespace:MailApp"
         mc:Ignorable="d"
         Title="New mail" Height="450" Width="800">
@@ -13,8 +14,6 @@
                 <MenuItem Header="Mail">
                     <MenuItem Header="Send" Click="SendMailClick"/>
                     <MenuItem Header="Save as draft" Click="SaveAsDraftClick"/>
-                    <MenuItem Header="Quit" Click="Quit_Click"/>
-                    <MenuItem Header="Save as draft and quit" Click="Save_Quit_Click" />
                 </MenuItem>
             </Menu>
 
@@ -46,7 +45,8 @@
             </Menu>
 
             <Menu>
-                <MenuItem Header="Color" Click="ChangeColor"/>
+                <MenuItem Header="Color" Click="MenuItem_Click"/>
+                <xctk:ColorPicker VerticalAlignment="Top" x:Name="ColorPickerElement"/>
             </Menu>
 
             <Menu>
@@ -89,8 +89,7 @@
                 <Label x:Name="AttachCounter" />
             </StackPanel>
             <RichTextBox Name="rtbEditor" SelectionChanged="rtbEditor_SelectionChanged" Height="350"
-             AllowDrop="True" Drop="rtbEditor_Drop"
-            DragEnter="rtbEditor_react" DragLeave="rtbEditor_react" PreviewDragOver="rtbEditor_PreviewDragOver">
+             AllowDrop="True" Drop="rtbEditor_Drop" PreviewDragOver="rtbEditor_PreviewDragOver">
                 <RichTextBox.Effect>
                     <BlurEffect x:Name="rtbEditor_blur" Radius="0" />
                 </RichTextBox.Effect>

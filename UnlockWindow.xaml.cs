@@ -12,6 +12,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using System.IO;
+
 namespace MailApp
 {
     /// <summary>
@@ -29,11 +31,6 @@ namespace MailApp
         {
             this.local_passwd = LocalLoginPasswdBox.Password;
             this.Close();
-        }
-
-        private void DeleteClick(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

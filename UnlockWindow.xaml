@@ -5,15 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MailApp"
         mc:Ignorable="d"
-        Title="UnlockWindow" Height="100" Width="150">
+        Title="Unlock" Height="100" Width="150">
     <Grid>
         <StackPanel>
             <Label Content="Enter password to login: " />
             <PasswordBox x:Name="LocalLoginPasswdBox" />
-            <StackPanel Orientation="Horizontal">
-                <Button Content="Unlock" Width="75" Click="UnlockClick"/>
-                <Button Content="Delete" Width="75" Click="DeleteClick"/>
-            </StackPanel>
+            <Separator />
+            <Button Content="Unlock" Width="75" Click="UnlockClick"/>
         </StackPanel>
     </Grid>
 </Window>

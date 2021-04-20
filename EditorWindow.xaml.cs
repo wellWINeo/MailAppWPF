@@ -10,9 +10,6 @@ using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Windows.Forms;
 using System.Net.Mail;
 using System.Net;
 
@@ -30,22 +27,22 @@ namespace MailApp
 		private string Passwd;
 		public int[] fontSizeArr = new int[] { 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 };
 		public ObservableCollection<String> KnownUsers = new ObservableCollection<String>();
-		string pathToUsers = System.IO.Path.Combine(Directory.GetCurrentDirectory(), "Known.users");
+		string pathToUsers = Path.Combine(Directory.GetCurrentDirectory(), "Known.users");
 		public Collection<Attachment> AttachArr = new Collection<Attachment>();
-		public int AttachArrCount { get; set; }
 		public MailMessage msg;
 
 		public EditorWindow(string login, string passwd)
         {
 			this.Login = login;
 			this.Passwd = passwd;
+
             InitializeComponent();
+
 			AttachCounter.Content = 0;
 			FetchKnownUsers();
 			ToCombBox.ItemsSource = KnownUsers;
 			FromBox.Text = this.Login;
 			cmbFontSize.ItemsSource = fontSizeArr;
-
         }
 
 		private void rtbEditor_SelectionChanged(object sender, RoutedEventArgs e)
@@ -131,11 +128,11 @@ namespace MailApp
 			} 
 			catch (SmtpException e)
             {
-				System.Windows.Forms.MessageBox.Show("Error in mail sending!");
+				MessageBox.Show("Error in mail sending!");
             }
 			catch (Exception e)
             {
-				System.Windows.Forms.MessageBox.Show("Unknown error!\n" + e.Message);
+				MessageBox.Show("Unknown error!\n" + e.Message);
             }
             finally
             {
@@ -215,39 +212,6 @@ namespace MailApp
 			rtbEditor.Selection.ApplyPropertyValue(Inline.FontSizeProperty, cmbFontSize.Text);
 		}
 
-		private void Quit_Click(object sender, RoutedEventArgs e)
-		{
-			System.Windows.Application.Current.Shutdown();
-		}
-
-		private void Save_Quit_Click(object sender, RoutedEventArgs e)
-		{
-			Save_Executed(sender, e);
-			Quit_Click(sender, e);
-		}
-
-		private void ChangeColor(object sender, RoutedEventArgs e)
-		{
-			// rtbEditor.SelectionBrush = Brushes.Green;
-			TextSelection text = rtbEditor.Selection;
-
-			ColorDialog colorDialog = new ColorDialog();
-			if (colorDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-			{
-				BrushConverter bc = new BrushConverter();
-				Brush brush = null;
-				try
-				{
-					brush = (Brush)bc.ConvertFromString(colorDialog.Color.Name);
-				}
-				catch
-				{
-					System.Windows.MessageBox.Show("Invalid color");
-				}
-				text.ApplyPropertyValue(TextElement.ForegroundProperty, brush);
-			}
-		}
-
 		private void LineSpacing(object sender, RoutedEventArgs e)
 		{
 			rtbEditor.Document.LineHeight = Convert.ToDouble((sender as System.Windows.Controls.MenuItem).Header);
@@ -261,21 +225,27 @@ namespace MailApp
 
 				foreach (string file in files)
 				{
-					System.Windows.Forms.MessageBox.Show(file);
+					MessageBox.Show(file);
 					AttachArr.Add(new Attachment(file));
 					AttachCounter.Content = (int)AttachCounter.Content + 1;
 				}
             }
         }
 
-		private void rtbEditor_react(object sender, System.Windows.DragEventArgs e)
-		{
-			rtbEditor_blur.Radius = rtbEditor_blur.Radius == 0 ? 25 : 0;
-		}
-
         private void rtbEditor_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
         {
 			e.Handled = true;
+		}
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+			Color? color = ColorPickerElement.SelectedColor;
+
+			var converter = new BrushConverter();
+			var brush = (Brush)converter.ConvertFromString(color.ToString());
+
+			TextSelection text = rtbEditor.Selection;
+			text.ApplyPropertyValue(TextElement.ForegroundProperty, brush);
 		}
     }
 }
